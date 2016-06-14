@@ -21,6 +21,9 @@ TMP_FILE=".notes.tmp"
 # echo "pdfpc file=$PDFPC_FILE"
 
 
+# create Backup-file of pdfpc
+cp -f $PDFPC_FILE $PDFPC_FILE.bak
+
 notes_start_linenr=$( awk '/\[notes\]/{ print NR; exit }'  $PDFPC_FILE )
 
 # echo "[notes] sections starts at line $notes_start_linenr"
@@ -49,5 +52,7 @@ cat $TMP_FILE
 cat $TMP_FILE > $PDFPC_FILE
 
 rm -f $TMP_FILE
+
+
 
 
