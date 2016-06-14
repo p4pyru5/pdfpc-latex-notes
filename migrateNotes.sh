@@ -12,8 +12,14 @@ JOBNAME=${JOBNAME%.*}
 
 NOTES_FILE=$( echo "$JOBNAME.pdfpc.notes" )
 PDFPC_FILE=$( echo "$JOBNAME.pdfpc" )
+PDFPC_FILE_BAK=$PDFPC_FILE.bak
 
-TMP_FILE=".notes.tmp"
+
+if [[ ! -f $NOTES_FILE ]]; then
+	echo "There is no notes-file with name: $NOTES_FILE"
+	exit 1
+fi
+
 
 
 # echo "jobname=$JOBNAME"
@@ -22,36 +28,33 @@ TMP_FILE=".notes.tmp"
 
 
 # create Backup-file of pdfpc
-cp -f $PDFPC_FILE $PDFPC_FILE.bak
+cp -f $PDFPC_FILE $PDFPC_FILE_BAK
 
-notes_start_linenr=$( awk '/\[notes\]/{ print NR; exit }'  $PDFPC_FILE )
 
+
+notes_start_linenr=$( awk '/\[notes\]/{ print NR; exit }'  $PDFPC_FILE_BAK )
 # echo "[notes] sections starts at line $notes_start_linenr"
-
 lines_pre_notes=$(( $notes_start_linenr - 1 ))
 
-
-echo -n "" > $TMP_FILE
-
-head --lines=$lines_pre_notes $PDFPC_FILE >> $TMP_FILE
+# truncate pdfpc file
+echo -n "" > $PDFPC_FILE
+# copy all non-note-lines from original pdfpc file to tmp file
+head --lines=$lines_pre_notes $PDFPC_FILE_BAK >> $PDFPC_FILE
 
 # TODO check if file exists
-cat $NOTES_FILE >> $TMP_FILE
-
-
 # replace \\ with newlines
-sed -i 's/\\\\/\n/g' $TMP_FILE
-sed -i 's/\\par/\n\n/g' $TMP_FILE
+sed -i 's/\\\\/\n/g' $NOTES_FILE
+sed -i 's/\\par/\n\n/g' $NOTES_FILE
+# copy notes to pdfpc file
+cat $NOTES_FILE >> $PDFPC_FILE
 
-
-
+# Show new content
 echo "---------------------------------------"
-cat $TMP_FILE
+cat $PDFPC_FILE
 
 
-cat $TMP_FILE > $PDFPC_FILE
 
-rm -f $TMP_FILE
+
 
 
 
