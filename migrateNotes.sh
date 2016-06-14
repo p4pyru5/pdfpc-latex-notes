@@ -21,6 +21,11 @@ if [[ ! -f $NOTES_FILE ]]; then
 fi
 
 
+if [[ ! -f $PDFPC_FILE ]]; then
+	echo "No pdfpc-file found. Create empty one"
+	touch $PDFPC_FILE
+fi
+
 
 # echo "jobname=$JOBNAME"
 # echo "notes file=$NOTES_FILE"
