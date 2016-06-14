@@ -58,7 +58,7 @@ echo "---------------------------------------"
 cat $PDFPC_FILE
 
 
-
+rm -f $NOTES_FILE
 
 
 
