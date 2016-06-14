@@ -22,8 +22,10 @@ Behavior will be the same but it will additionally write notes to note-output-fi
 To migrate the notes into the pdfpc-file, you should run the shell-script.
 This will automatically convert the tex newline `\\` to `\n`.
 
-What is different to cebes Version
+
+What is different to [cebes version](https://github.com/cebe/pdfpc-latex-notes)?
 ---------------
+
 - collected notes are written to file with `.pdfpc.notes` extension.
 - you have to migrate the notes manually or with the shell script
 - all settings in pdfpc will be preserved, only notes section will be overwritten
