@@ -7,7 +7,7 @@ if [[ -z $JOBNAME ]]; then
 	exit -1
 fi
 
-
+# name of pdf/pdfpc/tex-file, extension does not matter
 JOBNAME=${JOBNAME%.*}
 
 NOTES_FILE=$( echo "$JOBNAME.pdfpc.notes" )
@@ -17,7 +17,6 @@ TMP_FILE=".notes.tmp"
 
 
 # echo "jobname=$JOBNAME"
-
 # echo "notes file=$NOTES_FILE"
 # echo "pdfpc file=$PDFPC_FILE"
 
@@ -48,5 +47,7 @@ cat $TMP_FILE
 
 
 cat $TMP_FILE > $PDFPC_FILE
+
+rm -f $TMP_FILE
 
 
